@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const wishlistSchema = new mongoose.Schema({
     name: String,
-    oldPrice: String,
-    newPrice: String,
+    price: String,
     image: String
 })
+
+module.exports = mongoose.model('wishlists', wishlistSchema);
