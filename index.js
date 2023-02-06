@@ -1,11 +1,11 @@
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser')
 const Products = require('./Models/dbProducts/dbProducts');
 const WishList = require('./Models/Wishlists/Wishlists')
-const User = require('./Models/Users/Users')
-const app = express();
-const router = require('./routes/user-route');
 const connectDB = require('./db/connect');
+const router = require('./routes/user-route');
+const cookieParser = require('cookie-parser');
 const PORT = 9000;
 const cors = require('cors');
 
@@ -14,12 +14,10 @@ app.use(cors({
     origin: "http://localhost:3000"
 }));
 
-
+app.use(cookieParser());
 app.use('/authentication', router);
 
-
 app.get('/all-products', async (req, res) => {
-
     try {
         const data = await Products.find();
         res.send(data)

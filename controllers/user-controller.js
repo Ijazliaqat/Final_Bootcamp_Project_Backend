@@ -58,14 +58,26 @@ const login = async (req, res, next) => {
         return res.status(400).json({ message: "Invalid Email/Password" })
     }
     const token = jwt.sign({ id: existingUser._id }, JWT_SECRET_KEY, {
-        expiresIn: '360000000'
+        expiresIn: '30s'
     })
+
+    res.cookie(String(existingUser._id), token, {
+        path: '/',
+        expires: new Date(Date.now() + 1000 * 30), //expire in 30s
+        httpOnly: true,
+        sameSite: 'lax'
+    });
     return res.status(200).json({ message: "Successfully Logges In", user: existingUser, token })
 }
 
+
+
 const verifyToken = (req, res, next) => {
-    const headers = req.headers[`authorization`];
-    const token = headers.split(' ')[1];
+    const cookies = req.headers.cookie;
+    const token = cookies.split("=")[1]
+    console.log(token);
+    // const headers = req.headers[`authorization`];
+    // const token = headers.split(' ')[1];
 
     if (!token) {
         res.status(404).json({ message: 'No Token Found' })
@@ -83,20 +95,20 @@ const verifyToken = (req, res, next) => {
 }
 
 const getUser = async (req, res, next) => {
-    let userID = req.id;
+    let userId = req.id;
 
     let user;
     try {
-        user = await User.findById(userID,"-password");
+        user = await User.findById(userId, "-password");
     } catch (err) {
         return new Error(err)
     }
 
-    if(!user){
-        return res.status(404).json({message: "User not Found"})
+    if (!user) {
+        return res.status(404).json({ message: "User not Found" })
     }
 
-    return res.status(200).json({user})
+    return res.status(200).json({ user })
 }
 
 exports.signup = signup;
