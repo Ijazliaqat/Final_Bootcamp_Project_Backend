@@ -1,9 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const Products = require('./Models/dbProducts/dbProducts');
-const WishList = require('./Models/dbWishlists/dbWishlists')
-const User = require('./Models/dbUsers/dbUsers')
+const WishList = require('./Models/Wishlists/Wishlists')
+const User = require('./Models/Users/Users')
 const app = express();
+const router = require('./routes/user-route');
 const connectDB = require('./db/connect');
 const PORT = 9000;
 const cors = require('cors');
@@ -12,6 +13,10 @@ app.use(bodyParser.json());
 app.use(cors({
     origin: "http://localhost:3000"
 }));
+
+
+app.use('/authentication', router);
+
 
 app.get('/all-products', async (req, res) => {
 
@@ -22,21 +27,6 @@ app.get('/all-products', async (req, res) => {
         res.status(500).send(error)
     }
 })
-// UPPERCASE
-// ADD_PRODUCT // Environment Variables / App-wide Constants example: BASE_URL
-// snake_case
-// add_product_to_cart // Python
-// camelCase
-// addProductToCart // JavaScript
-// kebab-case
-// add-product-to-cart // API Routes
-// PascalCase
-// AddProductToCart
-// Title Case
-// Add Product To Cart // Heading
-// Sentence case
-// Add product to cart // Paragraphs
-
 
 app.post('/add-product', async (req, res, next) => {
     console.log(req.body);
@@ -65,19 +55,19 @@ app.post('/wish-lists', async (req, res, next) => {
     })
 })
 
-app.post('/sign-up', (req, res) => {
+// app.post('/sign-up', (req, res) => {
 
-    const user = new User({
-        email: req.body.email,
-        password: req.body.password
-    });
+//     const user = new User({
+//         email: req.body.email,
+//         password: req.body.password
+//     });
 
-    user.save().then((result)=>{
-        res.status(201).json( {message: "Sign Up Created Successfully", data: result, errors: null })
-    }).catch((err)=>{
-        res.status(400).json({ message: err.message })
-    })
-})
+//     user.save().then((result)=>{
+//         res.status(201).json( {message: "Sign Up Created Successfully", data: result, errors: null })
+//     }).catch((err)=>{
+//         res.status(400).json({ message: err.message })
+//     })
+// })
 
 app.use('/', (req, res) => {
     res.send('express')
@@ -93,3 +83,20 @@ const start = async () => {
 }
 
 start();
+
+
+
+// UPPERCASE
+// ADD_PRODUCT // Environment Variables / App-wide Constants example: BASE_URL
+// snake_case
+// add_product_to_cart // Python
+// camelCase
+// addProductToCart // JavaScript
+// kebab-case
+// add-product-to-cart // API Routes
+// PascalCase
+// AddProductToCart
+// Title Case
+// Add Product To Cart // Heading
+// Sentence case
+// Add product to cart // Paragraphs
