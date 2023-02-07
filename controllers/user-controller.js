@@ -5,9 +5,7 @@ const JWT_SECRET_KEY = 'OFS';
 
 
 const signup = async (req, res, next) => {
-
     const { name, email, password } = req.body;
-
     let existingUser;
 
     try {
@@ -38,18 +36,16 @@ const signup = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
-
     let existingUser;
 
     try {
         existingUser = await User.findOne({ email: email });
-
     } catch (err) {
         return new Error(err);
     }
 
     if (!existingUser) {
-        return res.status(400).json({ message: "User not found. Signup Please" })
+        return res.status(400).json({ message: "User Not Found" })
     }
 
     const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
@@ -58,12 +54,12 @@ const login = async (req, res, next) => {
         return res.status(400).json({ message: "Invalid Email/Password" })
     }
     const token = jwt.sign({ id: existingUser._id }, JWT_SECRET_KEY, {
-        expiresIn: '30s'
+        expiresIn: '30m'
     })
 
     res.cookie(String(existingUser._id), token, {
         path: '/',
-        expires: new Date(Date.now() + 1000 * 30), //expire in 30s
+        expires: new Date(Date.now() + 10000 * 30), 
         httpOnly: true,
         sameSite: 'lax'
     });
@@ -96,8 +92,8 @@ const verifyToken = (req, res, next) => {
 
 const getUser = async (req, res, next) => {
     let userId = req.id;
-
     let user;
+    
     try {
         user = await User.findById(userId, "-password");
     } catch (err) {
