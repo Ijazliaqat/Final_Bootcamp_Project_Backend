@@ -4,18 +4,23 @@ const bodyParser = require('body-parser')
 const Products = require('./Models/dbProducts/dbProducts');
 const WishList = require('./Models/Wishlists/Wishlists')
 const connectDB = require('./db/connect');
-const router = require('./routes/user-route');
+const Userrouter =require('./routes/user-route');
+const WishListRouter = require('./routes/user-wishlist');
 const cookieParser = require('cookie-parser');
 const PORT = 9000;
 const cors = require('cors');
+require('dotenv').config();
 
 app.use(bodyParser.json());
 app.use(cors({
+    credentials:true,
     origin: "http://localhost:3000"
 }));
 
 app.use(cookieParser());
-app.use('/authentication', router);
+
+app.use('/authentication',Userrouter);
+app.use('/user', WishListRouter);
 
 app.get('/all-products', async (req, res) => {
     try {

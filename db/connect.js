@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require('dotenv').config()
 
 let uri = `mongodb+srv://ijaz:Mongodb009%40@bitebazaar.rwrrozp.mongodb.net/biteBazaar`;
 
