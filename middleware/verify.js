@@ -1,6 +1,7 @@
 const User = require("../Models/Users/Users");
 const JWT_SECRET_KEY = "OFSSecrectkey";
 const jwt = require('jsonwebtoken')
+
 const verifyToken = async (req, res, next) => {
   try {
 

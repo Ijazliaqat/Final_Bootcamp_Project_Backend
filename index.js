@@ -7,6 +7,7 @@ const connectDB = require('./db/connect');
 const Userrouter =require('./routes/user-route');
 const WishListRouter = require('./routes/user-wishlist');
 const cookieParser = require('cookie-parser');
+const verifyToken = require('./middleware/verify')
 const PORT = 9000;
 const cors = require('cors');
 require('dotenv').config();
@@ -22,7 +23,7 @@ app.use(cookieParser());
 app.use('/authentication',Userrouter);
 app.use('/user', WishListRouter);
 
-app.get('/all-products', async (req, res) => {
+app.get('/all-products',verifyToken ,async (req, res) => {
     try {
         const data = await Products.find();
         res.send(data)
