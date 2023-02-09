@@ -2,6 +2,7 @@ const User = require("../Models/Users/Users");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const express = require("express");
+const JWT_SECRET_KEY = "OFSSecrectkey";
 
 const signup = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -56,7 +57,7 @@ const login = async (req, res, next) => {
   let existingUser;
 
   try {
-    existingUser = await User.findOne({ email: email });
+    existingUser = await User.findOne({ email: email }).populate('wishlists').exec();
   } catch (err) {
     return new Error(err);
   }
@@ -70,7 +71,7 @@ const login = async (req, res, next) => {
   if (!isPasswordCorrect) {
     return res.status(400).json({ message: "Invalid Email/Password" });
   }
-  const token = jwt.sign({id: existingUser._id }, `${process.env.JWT_SECRET_KEY}`, {
+  const token = jwt.sign({id: existingUser._id }, JWT_SECRET_KEY, {
     expiresIn: "1h",
   });
 

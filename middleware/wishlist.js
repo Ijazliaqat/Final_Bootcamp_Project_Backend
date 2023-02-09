@@ -1,17 +1,17 @@
-
+const WishList = require('../Models/Wishlists/Wishlists');
 
 const addProductToWishlist = async (req, res, next) => {
-    // Get the current user from the request
-    const user = req.user;
-  console.log(user);
-    // Add the new product to the user's wishlist
-    // user.wishlist.push({
-    //   productId: req.body.productId,
-    // });
-  
-    // // Save the updated user
-    // await user.save();
-  
-  };
 
-  module.exports = addProductToWishlist;
+  console.log(req.body);
+  const wishListObj = req.body;
+
+  WishList.create(wishListObj, (err, wishListObj) => {
+    if (err) {
+      res.status(400).json({ message: err.message })
+    } else {
+      res.status(201).json({ message: "Wish List Created Successfully", data: wishListObj, errors: null })
+    }
+  })
+};
+
+module.exports = addProductToWishlist;
