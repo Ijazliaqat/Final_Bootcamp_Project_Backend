@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use('/authentication',Userrouter);
 app.use('/user', WishListRouter);
 
-app.get('/all-products',verifyToken ,async (req, res) => {
+app.get('/all-products', async (req, res) => {
     try {
         const data = await Products.find();
         res.send(data)
@@ -80,6 +80,7 @@ app.use('/', (req, res) => {
 const start = async () => {
     try {
         await connectDB();
+        console.log('Connected With DB');
         app.listen(PORT, () => { console.log(`Server listening on port ${PORT}`) });
     } catch (error) {
         console.log(error);

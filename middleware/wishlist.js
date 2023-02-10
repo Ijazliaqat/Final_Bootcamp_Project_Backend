@@ -3,10 +3,10 @@ const User = require("../Models/Users/Users");
 const WishList = require("../Models/Wishlists/Wishlists");
 
 const Wishlistadd = async (req, res) => {
-  const productid = req.params.productid;
-  const data = req.user;
+  const productid = req?.params?.productid;
+  const data = req?.user;
   const user = await User.findByIdAndUpdate(
-    { _id: data.id },
+    { _id: data?.id },
     { $push: { wishlists: productid } }
   );
   res.status(200).json({ message: "Wishlist added" });
