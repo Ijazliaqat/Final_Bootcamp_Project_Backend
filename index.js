@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const Products = require('./Models/dbProducts/dbProducts');
 const WishList = require('./Models/Wishlists/Wishlists')
 const connectDB = require('./db/connect');
-const Userrouter =require('./routes/user-route');
+const Userrouter = require('./routes/user-route');
 const WishListRouter = require('./routes/user-wishlist');
 const cookieParser = require('cookie-parser');
 const verifyToken = require('./middleware/verify')
@@ -14,19 +14,40 @@ require('dotenv').config();
 
 app.use(bodyParser.json());
 app.use(cors({
-    credentials:true,
+    credentials: true,
     origin: "http://localhost:3000"
 }));
 
 app.use(cookieParser());
 
-app.use('/authentication',Userrouter);
+app.use('/authentication', Userrouter);
 app.use('/user', WishListRouter);
 
 app.get('/all-products', async (req, res) => {
+    const { selectCategory } = req.query;
+    const filters = {};
+
+
+    // if (Object.keys(filters).length === 0) {
+    //     products = await Products.find();
+    //   }else{
+
+    //   }
+
+    if (selectCategory) {
+        filters.selectCategory = selectCategory;
+    }
+    
     try {
-        const data = await Products.find();
-        res.send(data)
+        if (Object.keys(filters).length === 0) {
+            data = await Products.find();
+            res.send(data)
+        } else {
+
+            const data = await Products.find(filters);
+            res.send(data)
+        }
+        // res.send(data)
     } catch (error) {
         res.status(500).send(error)
     }
