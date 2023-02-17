@@ -4,7 +4,8 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, password: 8 },
-  wishlists: [{ type: mongoose.Schema.ObjectId}]
+  wishlists: [{ type: mongoose.Schema.ObjectId}],
+  history: [{type: mongoose.Schema.ObjectId}]
 });
 
 const User = mongoose.model("User", userSchema);

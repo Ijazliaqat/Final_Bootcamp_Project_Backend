@@ -6,6 +6,7 @@ const WishList = require('./Models/Wishlists/Wishlists')
 const connectDB = require('./db/connect');
 const Userrouter = require('./routes/user-route');
 const WishListRouter = require('./routes/user-wishlist');
+const HistoryRouter = require('./routes/user-history')
 const cookieParser = require('cookie-parser');
 const verifyToken = require('./middleware/verify')
 const PORT = 9000;
@@ -22,6 +23,7 @@ app.use(cookieParser());
 
 app.use('/authentication', Userrouter);
 app.use('/user', WishListRouter);
+app.use('/user',HistoryRouter)
 
 app.get('/all-products', async (req, res) => {
     const { selectCategory } = req.query;
