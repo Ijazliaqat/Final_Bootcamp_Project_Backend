@@ -7,7 +7,6 @@ const WishListRouter = require('./routes/user-wishlist');
 const HistoryRouter = require('./routes/user-history');
 const ProductsRouter = require('./routes/user-products');
 const cookieParser = require('cookie-parser');
-const PORT = 9000;
 const cors = require('cors');
 require('dotenv').config();
 
@@ -31,12 +30,11 @@ app.use('/', (req, res) => {
 const start = async () => {
     try {
         await connectDB();
-        app.listen(PORT, () => { console.log(`Server listening on port ${PORT}`) });
+        app.listen(process.env.PORT, () => { console.log(`Server listening on port ${process.env.PORT}`) });
     } catch (error) {
         console.log(error);
     }
 }
-
 start();
 
 

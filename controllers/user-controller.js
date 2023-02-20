@@ -63,7 +63,7 @@ const login = async (req, res, next) => {
   }
 
   if (!existingUser) {
-    return res.status(400).json({ message: "User Not Found" });
+    return res.status(400).json({ message: "Invalid Email/Password" });
   }
 
   const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
