@@ -12,6 +12,18 @@ const Wishlistadd = async (req, res) => {
   res.status(200).json({ message: "Wishlist added" });
 };
 
+
+const deleteWishlist =  async (req,res) =>{
+  const productid = req.params.productid;
+
+  const data = req?.user;
+  const user = await User.findByIdAndUpdate(
+    { _id: data.id },
+    { $pull: { wishlists: productid } }
+  );
+  res.status(200).json({ message: "Wishlist deleted" });
+}
+
 const getWishlist = async (req, res) => {
   const { id } = req.user;
   const data = await User.aggregate([
@@ -37,4 +49,4 @@ const getWishlist = async (req, res) => {
   return res.status(200).json(data);
 };
 
-module.exports = { Wishlistadd, getWishlist };
+module.exports = { Wishlistadd, getWishlist,deleteWishlist };

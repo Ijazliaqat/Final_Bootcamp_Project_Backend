@@ -6,6 +6,5 @@ const wishlistSchema = new mongoose.Schema({
     image: String
 })
 
-
 const WishList = mongoose.model('wishlists', wishlistSchema);
 module.exports = WishList;

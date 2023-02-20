@@ -37,5 +37,4 @@ const getHistory = async (req, res) => {
     return res.status(200).json(data);
 }
 
-
 module.exports = { getHistory, addHistory };
