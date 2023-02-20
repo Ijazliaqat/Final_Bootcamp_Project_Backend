@@ -29,13 +29,6 @@ app.get('/all-products', async (req, res) => {
     const { selectCategory } = req.query;
     const filters = {};
 
-
-    // if (Object.keys(filters).length === 0) {
-    //     products = await Products.find();
-    //   }else{
-
-    //   }
-
     if (selectCategory) {
         filters.selectCategory = selectCategory;
     }
@@ -68,33 +61,6 @@ app.post('/add-product', async (req, res, next) => {
         }
     })
 })
-
-// app.post('/wish-lists', async (req, res, next) => {
-//     console.log(req.body);
-//     const wishListObj = req.body;
-
-//     WishList.create(wishListObj, (err, wishListObj) => {
-//         if (err) {
-//             res.status(400).json({ message: err.message })
-//         } else {
-//             res.status(201).json({ message: "Wish List Created Successfully", data: wishListObj, errors: null })
-//         }
-//     })
-// })
-
-// app.post('/sign-up', (req, res) => {
-
-//     const user = new User({
-//         email: req.body.email,
-//         password: req.body.password
-//     });
-
-//     user.save().then((result)=>{
-//         res.status(201).json( {message: "Sign Up Created Successfully", data: result, errors: null })
-//     }).catch((err)=>{
-//         res.status(400).json({ message: err.message })
-//     })
-// })
 
 app.use('/', (req, res) => {
     res.send('express')
