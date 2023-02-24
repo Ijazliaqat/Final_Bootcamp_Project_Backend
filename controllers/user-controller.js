@@ -6,7 +6,6 @@ const JWT_SECRET_KEY = "OFSSecrectkey";
 
 const signup = async (req, res, next) => {
   const { name, email, password } = req.body;
-  // let existingUser;
 
   try {
     const existingUser = await User.findOne({ email: email });
