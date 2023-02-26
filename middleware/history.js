@@ -9,7 +9,7 @@ const addHistory = async (req, res) => {
         { _id: data?.id },
         { $push: { history: orderObj }}
     );
-    res.status(200).json({ message: "history successfully added" });
+    res.status(200).json({ message: "added to history successfully" });
 };
 
 const getHistory = async (req, res) => {

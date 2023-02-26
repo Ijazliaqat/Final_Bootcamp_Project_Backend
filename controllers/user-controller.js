@@ -22,33 +22,6 @@ const signup = async (req, res, next) => {
     console.error(error);
     res.status(500).send({ message: "Server error" });
   }
-  // try {
-
-  //     existingUser = await User.findOne({ email: email })
-  // } catch (err) {
-  //     console.log(err);
-  // }
-
-  // if (existingUser) {
-  //     res.status(400).json({ message: "User already exists" })
-  // }
-
-  // const emailExist = await User.findOne({email: email});
-
-  // const hashedPassword = bcrypt.hashSync(password);
-  // const user = new User({
-  //     name: name,
-  //     email: email,
-  //     password: hashedPassword
-  // });
-
-  // try {
-  //     await user.save();
-  // } catch (err) {
-  //     console.log(err);
-  // }
-
-  // return res.status(201).json({ message: user })
 };
 
 const login = async (req, res, next) => {
